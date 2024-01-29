@@ -1,0 +1,12 @@
+{
+  "name": "screenshot-image-search",
+  "productName": "screenshot image search",
+  "version": "1.0.0",
+  "description": "Takes screen shot by dragging specific area and google image search it ",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Rihui Lu",
+  "license": "MIT"
+}
