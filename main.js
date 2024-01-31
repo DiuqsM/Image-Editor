@@ -8,8 +8,16 @@ function createWindow() {
     webPreferences: { nodeIntegration: true }
   });
 
-    mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
+    mainWindow.loadFile(path.join(__dirname, 'index.html'));
 }
+
+function coordinate(event) {
+  let x = event.clientX;
+  let y = event.clientY;
+  document.getElementById("X").value = x;
+  document.getElementById("Y").value = y;
+}
+
 
 app.whenReady().then(() => {
     createWindow();
