@@ -18,6 +18,17 @@ function coordinate(event) {
   document.getElementById("Y").value = y;
 }
 
+// if pressing ctrl + alt + shift
+// screen_shot = true
+// if press esc , screen_shot = false
+// on click, save coordinate to data 
+// on second click save coordinate to data
+// screen_shot = false 
+// take screenshot of the data 
+// calculate the area and take the screenshot of that specific area 
+// 1 (download the image and post it to google images in the browser app)
+// 2 (open a google image search page and post the image to the search bar)
+// redirect the user to the google images page
 
 app.whenReady().then(() => {
     createWindow();
