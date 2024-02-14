@@ -1,5 +1,5 @@
 const path = require('path');
-const {app, BrowserWindow } = require('electron');
+const {app, BrowserWindow, globalShortcut} = require('electron');
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -30,6 +30,25 @@ function coordinate(event) {
 // 2 (open a google image search page and post the image to the search bar)
 // redirect the user to the google images page
 
+
+//need two frameworks 
 app.whenReady().then(() => {
-    createWindow();
+  // Register a 'CommandOrControl+X' shortcut listener.
+  let maxWindow = 0; 
+
+  const ret = globalShortcut.register('CommandOrControl+Shift+X', () => {
+    console.log('CommandOrControl+X is pressed')
+    if(maxWindow == 0){
+      createWindow();
+      maxWindow++;
+    }
+  })
+
+
+  if (!ret) {
+    console.log('registration failed')
+  }
+
+  // Check whether a shortcut is registered.
+  console.log(globalShortcut.isRegistered('CommandOrControl+Shift+X'));
 }) ;
