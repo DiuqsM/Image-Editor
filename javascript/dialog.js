@@ -13,6 +13,9 @@ function showSaveDialog(BrowserWindow){
 
 
 function showOpenDialog(BrowserWindow){
+  //testing
+  console.log("showOpenDialog");
+
     dialog.showOpenDialog(BrowserWindow,{
       defaultPath: app.getPath("downloads"),
       filters: [

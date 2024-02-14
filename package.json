@@ -1,8 +1,8 @@
 {
-  "name": "screenshot-image-search",
-  "productName": "screenshot image search",
+  "name": "Image-Editor",
+  "productName": "Image-Editor",
   "version": "1.0.0",
-  "description": "Takes screen shot by dragging specific area and google image search it ",
+  "description": "A simple image editor built with Electron",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
