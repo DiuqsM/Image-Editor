@@ -34,21 +34,7 @@ function coordinate(event) {
 //need two frameworks 
 app.whenReady().then(() => {
   // Register a 'CommandOrControl+X' shortcut listener.
-  let maxWindow = 0; 
 
-  const ret = globalShortcut.register('CommandOrControl+Shift+X', () => {
-    console.log('CommandOrControl+X is pressed')
-    if(maxWindow == 0){
-      createWindow();
-      maxWindow++;
-    }
-  })
+  createWindow();
 
-
-  if (!ret) {
-    console.log('registration failed')
-  }
-
-  // Check whether a shortcut is registered.
-  console.log(globalShortcut.isRegistered('CommandOrControl+Shift+X'));
 }) ;
