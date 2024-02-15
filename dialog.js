@@ -1,22 +1,20 @@
-const {dialog, app, BrowserWindow} = require('electron');
+const {dialog, app} = require('electron');
 const fs = require('fs');
 const path = require('path');
 
-module.exports = {
-  showSaveDialog,
-  showOpenDialog
-}
+module.exports = {showOpenDialog, showSaveDialog};
 
-function showSaveDialog(BrowserWindow){
+//saves the image
+function showSaveDialog(){
     //not implemeted yet
   }
 
-
-function showOpenDialog(BrowserWindow){
+//opens the image 
+function showOpenDialog(){
   //testing
   console.log("showOpenDialog");
 
-    dialog.showOpenDialog(BrowserWindow,{
+    dialog.showOpenDialog({
       defaultPath: app.getPath("downloads"),
       filters: [
         { name: "Image", extensions: ["jpg", "png", "jpeg"]}
