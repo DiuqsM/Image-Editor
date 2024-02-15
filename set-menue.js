@@ -1,11 +1,13 @@
 const {app, Menu, BrowserWindow} = require('electron');
 const path = require('path');
 const {showOpenDialog} = require('./dialog');
+const {windowSetUp} = require('./main');
 
 module.exports = {setMainMenue};
 
 //creates the top left menue tab
-function setMainMenue(web){
+
+function setMainMenue(){
     const template = [
         {
         label: "File",
@@ -13,8 +15,12 @@ function setMainMenue(web){
             {
             label: "New Window",
             click: () => {
-                mainWindow = new BrowserWindow();
-                mainWindow.loadFile(path.join(__dirname, 'index.html'));              
+
+                //this is not workign as expected
+                windowSetUp();
+
+                //why is it the same process id as the original window? 
+                console.log(process.pid);                         
             }
             },
             {

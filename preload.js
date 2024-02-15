@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld('myAPI', {
   desktop: true
 })
 
+
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {
     const element = document.getElementById(selector)
@@ -13,7 +14,9 @@ window.addEventListener('DOMContentLoaded', () => {
   
   for (const dependency of ['chrome', 'node', 'electron']) {
     replaceText(`${dependency}-version`, process.versions[dependency])
-    console.log(process.versions[dependency]);
+    console.log(dependency + " version: " + process.versions[dependency]);
   }
+  
+  console.log("parent preload process id: " + process.pid); 
 })
 
