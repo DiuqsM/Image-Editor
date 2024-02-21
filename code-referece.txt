@@ -1,0 +1,89 @@
+  /**
+   * Writes an image to a specified path in the file system
+   * @param filePath A file name
+   */
+  saveToPath(filePath: string): void {
+    const png = new PNG({
+      width: this.width,
+      height: this.height,
+    });
+
+    png.data = Buffer.from(this.data.buffer);
+    fs.writeFileSync(filePath, PNG.sync.write(png));
+  }
+
+-----------------------------------------------------------------------------------------
+
+  /**
+   * Attempts to display a preview of the image in VSCode or an image viewer
+   * @param label A prefix for the file's name
+   */
+  show(label: string = "image.ts"): void {
+    const temp = tmp.fileSync({
+      prefix: label,
+      postfix: ".png",
+    });
+
+    this.saveToPath(temp.name);
+
+    if (os.platform() === "darwin") {
+      // macOS
+      exec(`open ${temp.name}`);
+    } else {
+      // if code is not in $PATH, this will not work
+      exec(`code --reuse-window ${temp.name}`);
+    }
+  }
+
+-------------------------------------------------------------------------------------------
+  /**
+   * Write the current state of the image to the file system.
+   * All images are saved under the current working directory (cwd) under the path `./images_out/*.png`.
+   * @param fileName The name of the image
+   */
+  save(fileName: string): void {
+    assert.match(
+      fileName,
+      /^(?!.{256,})(?!(aux|clock\$|con|nul|prn|com[1-9]|lpt[1-9])(?:$|\.))[^ ][ .\w-$()+=[\];#@~,&amp;']+[^. ]$/i,
+      "[image.ts] Invalid file name."
+    );
+    const root = process.cwd();
+    const images_out = path.resolve(root, "images_out");
+    if (!fs.existsSync(images_out)) {
+      fs.mkdirSync(images_out);
+    }
+    this.saveToPath(path.resolve(images_out, fileName + ".png"));
+  }
+
+  ---------------------------------------------------------------------------------------------------------
+  
+  /**
+   * Loads an image from the preselected gallery of images into memory as an `Image` object.
+   * If no name is given, this function selects one at random.
+   * @param name The name of the image from the gallery
+   * @returns An image in the gallery as an Image object.
+   */
+  static loadImageFromGallery(name?: ImageName): Image {
+    return name
+      ? Image.loadImageFromFile(path.resolve(IMAGES_FOLDER, name + ".png"))
+      : Image.loadImageFromFile(IMAGE_GALLERY[Math.floor(Math.random() * IMAGE_GALLERY.length)]);
+  }
+
+-------------------------------------------------------------------------------------------------------------
+
+  /**
+   * Loads an image from the file system into memory as an `Image` object.
+   * @param image Path to a PNG, JPG, JPEG file
+   * @returns The file represented as an `Image` object.
+   */
+  static loadImageFromFile(filePath: string): Image {
+    assert(filePath.endsWith(".png"), "[image.ts] Only `.png` files are supported.");
+
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`Unable to locate file: \`${filePath}\``);
+    }
+    fs.accessSync(filePath, fs.constants.R_OK);
+
+    const png = PNG.sync.read(fs.readFileSync(filePath));
+    return new Image(png.width, png.height, Uint8ClampedArray.from(png.data));
+  }
